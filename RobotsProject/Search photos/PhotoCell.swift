@@ -13,12 +13,14 @@ class PhotoCell: UICollectionViewCell {
     let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(photoImageView)
+        photoImageView.pinToSuperView()
     }
     
     func display(_ photo: Photo) {

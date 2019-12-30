@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D213EC5923BA3B6800553318 /* SingleItemApiResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D213EC5823BA3B6800553318 /* SingleItemApiResource.swift */; };
+		D213EC5B23BA3BA600553318 /* DownloadSingleItemResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D213EC5A23BA3BA600553318 /* DownloadSingleItemResource.swift */; };
+		D213EC5D23BA4EB100553318 /* UIImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D213EC5C23BA4EB100553318 /* UIImageViewExtensions.swift */; };
 		D21B4F9223AD23CA002E44DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21B4F9123AD23CA002E44DB /* AppDelegate.swift */; };
 		D21B4F9923AD23CA002E44DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D21B4F9823AD23CA002E44DB /* Assets.xcassets */; };
 		D21B4F9C23AD23CA002E44DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D21B4F9A23AD23CA002E44DB /* LaunchScreen.storyboard */; };
 		D21B4FA423AD24DF002E44DB /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21B4FA323AD24DF002E44DB /* MainTabBarController.swift */; };
-		D22E553223B291330053404F /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22E553123B291330053404F /* NetworkService.swift */; };
 		D23CA62223ADFACD00C62E14 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23CA62123ADFACD00C62E14 /* MainViewController.swift */; };
 		D23CA62523ADFAF000C62E14 /* CollectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23CA62423ADFAF000C62E14 /* CollectionsViewController.swift */; };
 		D23CA62823ADFF1100C62E14 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23CA62723ADFF1100C62E14 /* SearchViewController.swift */; };
@@ -29,13 +31,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D213EC5823BA3B6800553318 /* SingleItemApiResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleItemApiResource.swift; sourceTree = "<group>"; };
+		D213EC5A23BA3BA600553318 /* DownloadSingleItemResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadSingleItemResource.swift; sourceTree = "<group>"; };
+		D213EC5C23BA4EB100553318 /* UIImageViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewExtensions.swift; sourceTree = "<group>"; };
 		D21B4F8E23AD23CA002E44DB /* RobotsProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RobotsProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21B4F9123AD23CA002E44DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D21B4F9823AD23CA002E44DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D21B4F9B23AD23CA002E44DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D21B4F9D23AD23CA002E44DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D21B4FA323AD24DF002E44DB /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		D22E553123B291330053404F /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		D23CA62123ADFACD00C62E14 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		D23CA62423ADFAF000C62E14 /* CollectionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionsViewController.swift; sourceTree = "<group>"; };
 		D23CA62723ADFF1100C62E14 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				D25BCFC023AF871A00A01F36 /* UIViewExtensions.swift */,
+				D213EC5C23BA4EB100553318 /* UIImageViewExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 			children = (
 				D2AC5F6323B882C200ABF10F /* SearchApiResource.swift */,
 				D2AC5F6723B8DC0E00ABF10F /* DownloadApiResource.swift */,
+				D213EC5823BA3B6800553318 /* SingleItemApiResource.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -165,6 +171,7 @@
 			children = (
 				D2AC5F6523B890B700ABF10F /* SearchPhotoResource.swift */,
 				D2AC5F6923B8DD8800ABF10F /* DownloadPhotosResource.swift */,
+				D213EC5A23BA3BA600553318 /* DownloadSingleItemResource.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -172,7 +179,6 @@
 		D2AC5F6D23B8EAEC00ABF10F /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D22E553123B291330053404F /* NetworkService.swift */,
 				D25A19F723B4ACDA0096AE80 /* NetworkDataFetcher.swift */,
 			);
 			path = Services;
@@ -251,20 +257,22 @@
 			files = (
 				D2AC5F6A23B8DD8800ABF10F /* DownloadPhotosResource.swift in Sources */,
 				D2AC5F6423B882C200ABF10F /* SearchApiResource.swift in Sources */,
-				D22E553223B291330053404F /* NetworkService.swift in Sources */,
 				D23CA62B23AE04ED00C62E14 /* Photo.swift in Sources */,
 				D2588F1123AFD95400A1425C /* PhotoCell.swift in Sources */,
+				D213EC5D23BA4EB100553318 /* UIImageViewExtensions.swift in Sources */,
 				D25A19F823B4ACDA0096AE80 /* NetworkDataFetcher.swift in Sources */,
 				D21B4F9223AD23CA002E44DB /* AppDelegate.swift in Sources */,
 				D25BCFC123AF871A00A01F36 /* UIViewExtensions.swift in Sources */,
 				D23CA62523ADFAF000C62E14 /* CollectionsViewController.swift in Sources */,
 				D21B4FA423AD24DF002E44DB /* MainTabBarController.swift in Sources */,
+				D213EC5923BA3B6800553318 /* SingleItemApiResource.swift in Sources */,
 				D2AC5F6623B890B700ABF10F /* SearchPhotoResource.swift in Sources */,
 				D23CA62223ADFACD00C62E14 /* MainViewController.swift in Sources */,
 				D23CA63723AE07A400C62E14 /* PhotoCollection.swift in Sources */,
 				D25A19FB23B4BB240096AE80 /* SearchResults.swift in Sources */,
 				D23CA62823ADFF1100C62E14 /* SearchViewController.swift in Sources */,
 				D2AC5F6823B8DC0E00ABF10F /* DownloadApiResource.swift in Sources */,
+				D213EC5B23BA3BA600553318 /* DownloadSingleItemResource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

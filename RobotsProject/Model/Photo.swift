@@ -14,13 +14,13 @@ struct Photo: Decodable {
     let width: Int
     let height: Int
     let description: String?
-    //let urls: [PhotoUrl] // проблема в урл
-    
-    struct PhotoUrl: Decodable {
-        let raw: String
-        let regular: String
-        let full: String
-        let small: String
-        let thumb: String
+    let urls: [PhotoURL.RawValue: String] // проблема в урл
+
+    enum PhotoURL: String {
+        case raw
+        case full
+        case regular
+        case small
+        case thumb
     }
 }

@@ -20,6 +20,17 @@ class SearchViewController: UIViewController {
     let numberOfCellsInRow = 3
     let cellOffset: CGFloat = 2.0
     
+    var loadingMore = false
+    var currentPage = 1 {
+        didSet {
+            fetcher.loadItems(resource: &downloadPhotosResource, pageNumber: currentPage) { [weak self] (photo) in
+                guard let photo = photo else {return}
+                self?.photosArray.append(contentsOf: photo)
+                self?.loadingMore = false
+                self?.photoCollectionView.reloadData()
+            }
+        }
+    }
     
  
     lazy var photoCollectionView: UICollectionView = {
@@ -30,12 +41,17 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupVC()
         fetcher.loadItems(resource: &downloadPhotosResource, pageNumber: 1) { [weak self] (photo) in
             guard let photo = photo else {return}
             self?.photosArray = photo
+            DispatchQueue.main.async {
+                self?.photoCollectionView.reloadData()
+            }
             print(self?.photosArray)
         }
+        
+        setupVC()
+      
         // Do any additional setup after loading the view.
     }
     
@@ -73,6 +89,14 @@ class SearchViewController: UIViewController {
         return CGSize(width: cellWidth - spacing, height: cellHeight - cellOffset * 2)
     }
     
+    fetchImages(pageNumber: Int) {
+    
+    }
+    
+    func loadMore(_ pageNumber: Int) {
+        currentPage += 1
+    }
+    
 }
 
 extension SearchViewController: UISearchBarDelegate {
@@ -82,9 +106,9 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        fetcher.searchForItem(resource: &searchPhotoResource, searchTerm: searchText, pageNumber: 1) { (searchResults) in
+        fetcher.searchForItem(resource: &searchPhotoResource, searchTerm: searchText, pageNumber: 1) { [weak self] (searchResults) in
             guard let results = searchResults else {return}
-            print (results)
+            self?.photosArray = results.results
         }
     }
 }
@@ -94,13 +118,14 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return photosArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: photoCellIdentifier, for: indexPath)
-        //cell.display(photoArray[indexPath.item])
-        cell.backgroundColor = .red
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: photoCellIdentifier, for: indexPath) as! PhotoCell
+        cell.backgroundColor = .gray
+        guard let urlString = photosArray[indexPath.row].urls["thumb"] else { return cell }
+        cell.photoImageView.imageFromURL(urlString: urlString)
         return cell
     }
 }
@@ -121,5 +146,16 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets.init(top: 5, left: 5, bottom: 5, right: 5)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        if offsetY > contentHeight - scrollView.frame.height {
+            if loadingMore != true {
+                loadMore(currentPage)
+                loadingMore = true
+            }
+        }
     }
 }
