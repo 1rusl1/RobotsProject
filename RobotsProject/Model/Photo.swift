@@ -16,11 +16,12 @@ struct Photo: Decodable {
     let description: String?
     let urls: [PhotoURL.RawValue: String] // проблема в урл
 
-    enum PhotoURL: String {
-        case raw
-        case full
-        case regular
-        case small
-        case thumb
-    }
+}
+
+public enum PhotoURL: String {
+    case raw
+    case full
+    case regular
+    case small
+    case thumb
 }

@@ -23,7 +23,6 @@
 		D25A19F823B4ACDA0096AE80 /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25A19F723B4ACDA0096AE80 /* NetworkDataFetcher.swift */; };
 		D25A19FB23B4BB240096AE80 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25A19FA23B4BB240096AE80 /* SearchResults.swift */; };
 		D25BCFC123AF871A00A01F36 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25BCFC023AF871A00A01F36 /* UIViewExtensions.swift */; };
-		D25BCFC323AF9F0F00A01F36 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D25BCFC223AF9F0F00A01F36 /* Main.storyboard */; };
 		D2AC5F6423B882C200ABF10F /* SearchApiResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC5F6323B882C200ABF10F /* SearchApiResource.swift */; };
 		D2AC5F6623B890B700ABF10F /* SearchPhotoResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC5F6523B890B700ABF10F /* SearchPhotoResource.swift */; };
 		D2AC5F6823B8DC0E00ABF10F /* DownloadApiResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AC5F6723B8DC0E00ABF10F /* DownloadApiResource.swift */; };
@@ -49,7 +48,6 @@
 		D25A19F723B4ACDA0096AE80 /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
 		D25A19FA23B4BB240096AE80 /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		D25BCFC023AF871A00A01F36 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
-		D25BCFC223AF9F0F00A01F36 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D2AC5F6323B882C200ABF10F /* SearchApiResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchApiResource.swift; sourceTree = "<group>"; };
 		D2AC5F6523B890B700ABF10F /* SearchPhotoResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPhotoResource.swift; sourceTree = "<group>"; };
 		D2AC5F6723B8DC0E00ABF10F /* DownloadApiResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadApiResource.swift; sourceTree = "<group>"; };
@@ -91,7 +89,6 @@
 				D25A19F923B4BA870096AE80 /* Networking */,
 				D22E552F23B289360053404F /* Model */,
 				D22E553023B289440053404F /* Extensions */,
-				D25BCFC223AF9F0F00A01F36 /* Main.storyboard */,
 				D23CA62323ADFAD500C62E14 /* Photo of the day */,
 				D23CA62923ADFF2000C62E14 /* Search photos */,
 				D23CA62623ADFAF600C62E14 /* Collections */,
@@ -242,7 +239,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D25BCFC323AF9F0F00A01F36 /* Main.storyboard in Resources */,
 				D21B4F9C23AD23CA002E44DB /* LaunchScreen.storyboard in Resources */,
 				D21B4F9923AD23CA002E44DB /* Assets.xcassets in Resources */,
 			);

@@ -10,29 +10,47 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
-    var photosArray = [Photo]()
-    var searchText = String()
+    lazy var photosArray = [Photo]()
+    lazy var photoSearchResults : SearchResults = {
+        let results = SearchResults.init(total: 0, totalPages: 0, results: [Photo]())
+        return results
+    }()
+    lazy var searchText = String()
     let fetcher = NetworkDataFetcher()
-    var searchPhotoResource = SearchPhotoResource()
-    var downloadPhotosResource = DownloadPhotosResource()
+    lazy var searchPhotoResource = SearchPhotoResource()
+    lazy var downloadPhotosResource = DownloadPhotosResource()
     
     let photoCellIdentifier = "PhotoCell"
     let numberOfCellsInRow = 3
     let cellOffset: CGFloat = 2.0
     
+    var cache = NSCache<AnyObject, UIImage>()
+    
     var loadingMore = false
     var currentPage = 1 {
         didSet {
+            if searchText.count > 0 {
+                if photoSearchResults.totalPages > currentPage {
+                    fetcher.searchForItem(resource: &searchPhotoResource, searchTerm: searchText, pageNumber: currentPage) { [weak self] (results) in
+                        guard let results = results else {return}
+                        self?.photosArray.append(contentsOf: results.results)
+                        self?.loadingMore = false
+                        self?.photoCollectionView.reloadData()
+                        print ("APPEND SEARCH RESULTS")
+                    }
+                }
+            } else {
             fetcher.loadItems(resource: &downloadPhotosResource, pageNumber: currentPage) { [weak self] (photo) in
                 guard let photo = photo else {return}
                 self?.photosArray.append(contentsOf: photo)
                 self?.loadingMore = false
+                print ("APPEND download RESULTS")
                 self?.photoCollectionView.reloadData()
             }
         }
+        }
     }
     
- 
     lazy var photoCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
         return collectionView
@@ -41,17 +59,9 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetcher.loadItems(resource: &downloadPhotosResource, pageNumber: 1) { [weak self] (photo) in
-            guard let photo = photo else {return}
-            self?.photosArray = photo
-            DispatchQueue.main.async {
-                self?.photoCollectionView.reloadData()
-            }
-            print(self?.photosArray)
-        }
-        
+        fetchFeedImages()
         setupVC()
-      
+        
         // Do any additional setup after loading the view.
     }
     
@@ -89,26 +99,43 @@ class SearchViewController: UIViewController {
         return CGSize(width: cellWidth - spacing, height: cellHeight - cellOffset * 2)
     }
     
-    fetchImages(pageNumber: Int) {
-    
-    }
-    
     func loadMore(_ pageNumber: Int) {
         currentPage += 1
     }
     
+    func fetchFeedImages() {
+        fetcher.loadItems(resource: &downloadPhotosResource, pageNumber: 1) { [weak self] (photo) in
+            guard let photo = photo else {return}
+            self?.photosArray = photo
+            DispatchQueue.main.async {
+                self?.photoCollectionView.reloadData()
+            }
+        }
+        
+    }
+    
 }
+
+//MARK: - UISearchBarDelegate
 
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-       self.searchText = searchText
+        self.searchText = searchText
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        cache.removeAllObjects()
+        fetchFeedImages()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        cache.removeAllObjects()
         fetcher.searchForItem(resource: &searchPhotoResource, searchTerm: searchText, pageNumber: 1) { [weak self] (searchResults) in
             guard let results = searchResults else {return}
+            self?.photoSearchResults = results
             self?.photosArray = results.results
+            self?.photoCollectionView.reloadData()
         }
     }
 }
@@ -124,11 +151,21 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: photoCellIdentifier, for: indexPath) as! PhotoCell
         cell.backgroundColor = .gray
-        guard let urlString = photosArray[indexPath.row].urls["thumb"] else { return cell }
-        cell.photoImageView.imageFromURL(urlString: urlString)
+        
+        if let image = cache.object(forKey: photosArray[indexPath.row].id as AnyObject) {
+            cell.photoImageView.image = image
+        } else {
+            guard let urlString = photosArray[indexPath.row].urls[PhotoURL.thumb.rawValue] else { return cell }
+            cell.photoImageView.imageFromURL(urlString: urlString)
+            guard let image = cell.photoImageView.image else {return cell}
+            cache.setObject(image, forKey: photosArray[indexPath.row].id as AnyObject)
+        }
+        
         return cell
     }
 }
+
+//MARK: - UICollectionViewDelegateFlowLayout
 
 extension SearchViewController: UICollectionViewDelegateFlowLayout {
     
@@ -139,7 +176,7 @@ extension SearchViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return cellOffset
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return cellOffset
     }

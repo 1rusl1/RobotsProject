@@ -26,11 +26,29 @@ extension UIImageView {
                 return
             }
             DispatchQueue.main.async {
-                let image = UIImage(data: data!)
+                guard let data = data, let image = UIImage(data: data) else {return}
                 activityIndicator.removeFromSuperview()
                 self.image = image
             }
                         
+        }).resume()
+    }
+}
+
+extension UIImage {
+    public class func imageFromURL(urlString: String, completion: @escaping (UIImage)->Void) {
+        guard let url = URL(string: urlString) else {return}
+        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) -> Void in
+            
+            if error != nil {
+                print(error ?? "No Error")
+                return
+            }
+            DispatchQueue.main.async {
+                guard let data = data, let image = UIImage(data: data) else {return}
+                completion(image)
+            }
+            
         }).resume()
     }
 }
