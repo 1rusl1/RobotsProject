@@ -79,5 +79,10 @@ extension CollectionsListViewController: UITableViewDelegate, UITableViewDataSou
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        var photosResource = PhotosFromCollectionResource()
+        photosResource.id = collectionsArray[indexPath.row].id
+        navigationController?.pushViewController(CollectionViewController(resource: photosResource), animated: true)
+    }
 }

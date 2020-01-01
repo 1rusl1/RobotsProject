@@ -36,7 +36,7 @@ extension UIImageView {
 }
 
 extension UIImage {
-    public class func imageFromURL(urlString: String, completion: @escaping (UIImage)->Void) {
+    public class func imageWithURL(urlString: String, completion: @escaping (UIImage)->Void) {
         guard let url = URL(string: urlString) else {return}
         URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) -> Void in
             

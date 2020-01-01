@@ -154,11 +154,17 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         if let image = cache.object(forKey: photosArray[indexPath.row].id as AnyObject) {
             cell.photoImageView.image = image
+            print ("image from cache")
         } else {
             guard let urlString = photosArray[indexPath.row].urls[PhotoURL.thumb.rawValue] else { return cell }
-            cell.photoImageView.imageFromURL(urlString: urlString)
-            guard let image = cell.photoImageView.image else {return cell}
-            cache.setObject(image, forKey: photosArray[indexPath.row].id as AnyObject)
+            UIImage.imageWithURL(urlString: urlString) { [weak self] (image) in
+                print("Image request")
+                cell.photoImageView.image = image
+                self?.cache.setObject(image, forKey: self?.photosArray[indexPath.row].id as AnyObject)
+            }
+            //cell.photoImageView.imageFromURL(urlString: urlString)
+            //guard let image = cell.photoImageView.image else {return cell}
+            //cache.setObject(image, forKey: photosArray[indexPath.row].id as AnyObject)
         }
         
         return cell

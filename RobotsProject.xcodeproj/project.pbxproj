@@ -13,8 +13,11 @@
 		D21A0DD523BC801F00FB1867 /* CollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A0DD323BC801F00FB1867 /* CollectionCell.swift */; };
 		D21A0DD623BC801F00FB1867 /* CollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D21A0DD423BC801F00FB1867 /* CollectionCell.xib */; };
 		D21A0DD823BC9C9F00FB1867 /* DownloadCollectionsResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A0DD723BC9C9F00FB1867 /* DownloadCollectionsResource.swift */; };
-		D21A0DDA23BCB4F000FB1867 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A0DD923BCB4F000FB1867 /* CollectionViewController.swift */; };
 		D21A0DDC23BCB86000FB1867 /* PhotoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A0DDB23BCB86000FB1867 /* PhotoCollectionView.swift */; };
+		D21A0DDE23BCBA7F00FB1867 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A0DDD23BCBA7F00FB1867 /* CollectionViewController.swift */; };
+		D21A0DE023BCC01600FB1867 /* PhotosFromCollectionResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A0DDF23BCC01600FB1867 /* PhotosFromCollectionResource.swift */; };
+		D21A0DF223BCDE9900FB1867 /* PhotoDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A0DF123BCDE9900FB1867 /* PhotoDetailController.swift */; };
+		D21A0DF423BCE11B00FB1867 /* FullPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21A0DF323BCE11B00FB1867 /* FullPhotoCell.swift */; };
 		D21B4F9223AD23CA002E44DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D21B4F9123AD23CA002E44DB /* AppDelegate.swift */; };
 		D21B4F9923AD23CA002E44DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D21B4F9823AD23CA002E44DB /* Assets.xcassets */; };
 		D21B4F9C23AD23CA002E44DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D21B4F9A23AD23CA002E44DB /* LaunchScreen.storyboard */; };
@@ -41,8 +44,11 @@
 		D21A0DD323BC801F00FB1867 /* CollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCell.swift; sourceTree = "<group>"; };
 		D21A0DD423BC801F00FB1867 /* CollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionCell.xib; sourceTree = "<group>"; };
 		D21A0DD723BC9C9F00FB1867 /* DownloadCollectionsResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadCollectionsResource.swift; sourceTree = "<group>"; };
-		D21A0DD923BCB4F000FB1867 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 		D21A0DDB23BCB86000FB1867 /* PhotoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionView.swift; sourceTree = "<group>"; };
+		D21A0DDD23BCBA7F00FB1867 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		D21A0DDF23BCC01600FB1867 /* PhotosFromCollectionResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosFromCollectionResource.swift; sourceTree = "<group>"; };
+		D21A0DF123BCDE9900FB1867 /* PhotoDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailController.swift; sourceTree = "<group>"; };
+		D21A0DF323BCE11B00FB1867 /* FullPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPhotoCell.swift; sourceTree = "<group>"; };
 		D21B4F8E23AD23CA002E44DB /* RobotsProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RobotsProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21B4F9123AD23CA002E44DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D21B4F9823AD23CA002E44DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -140,9 +146,11 @@
 			isa = PBXGroup;
 			children = (
 				D23CA62423ADFAF000C62E14 /* CollectionsListViewController.swift */,
-				D21A0DD923BCB4F000FB1867 /* CollectionViewController.swift */,
+				D21A0DDD23BCBA7F00FB1867 /* CollectionViewController.swift */,
 				D21A0DD323BC801F00FB1867 /* CollectionCell.swift */,
 				D21A0DD423BC801F00FB1867 /* CollectionCell.xib */,
+				D21A0DF123BCDE9900FB1867 /* PhotoDetailController.swift */,
+				D21A0DF323BCE11B00FB1867 /* FullPhotoCell.swift */,
 			);
 			path = Collections;
 			sourceTree = "<group>";
@@ -182,6 +190,7 @@
 			children = (
 				D2AC5F6523B890B700ABF10F /* SearchPhotoResource.swift */,
 				D2AC5F6923B8DD8800ABF10F /* DownloadPhotosResource.swift */,
+				D21A0DDF23BCC01600FB1867 /* PhotosFromCollectionResource.swift */,
 				D21A0DD723BC9C9F00FB1867 /* DownloadCollectionsResource.swift */,
 				D213EC5A23BA3BA600553318 /* DownloadSingleItemResource.swift */,
 			);
@@ -269,6 +278,7 @@
 			files = (
 				D2AC5F6A23B8DD8800ABF10F /* DownloadPhotosResource.swift in Sources */,
 				D2AC5F6423B882C200ABF10F /* SearchApiResource.swift in Sources */,
+				D21A0DE023BCC01600FB1867 /* PhotosFromCollectionResource.swift in Sources */,
 				D23CA62B23AE04ED00C62E14 /* Photo.swift in Sources */,
 				D2588F1123AFD95400A1425C /* PhotoCell.swift in Sources */,
 				D21A0DD523BC801F00FB1867 /* CollectionCell.swift in Sources */,
@@ -277,16 +287,18 @@
 				D21B4F9223AD23CA002E44DB /* AppDelegate.swift in Sources */,
 				D25BCFC123AF871A00A01F36 /* UIViewExtensions.swift in Sources */,
 				D21A0DDC23BCB86000FB1867 /* PhotoCollectionView.swift in Sources */,
+				D21A0DDE23BCBA7F00FB1867 /* CollectionViewController.swift in Sources */,
+				D21A0DF223BCDE9900FB1867 /* PhotoDetailController.swift in Sources */,
 				D23CA62523ADFAF000C62E14 /* CollectionsListViewController.swift in Sources */,
 				D21B4FA423AD24DF002E44DB /* MainTabBarController.swift in Sources */,
 				D213EC5923BA3B6800553318 /* SingleItemApiResource.swift in Sources */,
 				D2AC5F6623B890B700ABF10F /* SearchPhotoResource.swift in Sources */,
+				D21A0DF423BCE11B00FB1867 /* FullPhotoCell.swift in Sources */,
 				D23CA62223ADFACD00C62E14 /* MainViewController.swift in Sources */,
 				D23CA63723AE07A400C62E14 /* PhotoCollection.swift in Sources */,
 				D25A19FB23B4BB240096AE80 /* SearchResults.swift in Sources */,
 				D23CA62823ADFF1100C62E14 /* SearchViewController.swift in Sources */,
 				D21A0DD823BC9C9F00FB1867 /* DownloadCollectionsResource.swift in Sources */,
-				D21A0DDA23BCB4F000FB1867 /* CollectionViewController.swift in Sources */,
 				D2AC5F6823B8DC0E00ABF10F /* DownloadApiResource.swift in Sources */,
 				D213EC5B23BA3BA600553318 /* DownloadSingleItemResource.swift in Sources */,
 			);
