@@ -20,7 +20,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setupVC()
-        setupUI()
     }
     
     func setupVC() {
@@ -28,11 +27,12 @@ class MainViewController: UIViewController {
         navigationItem.title = "Photo of the day"
         view.backgroundColor = .white
         view.addSubview(photoImageView)
-        guard let image = UIImage(named: "maintemplate") else {return}
-        photoImageView.image = image
+        setupImageView()
     }
     
-    func setupUI() {
+    func setupImageView() {
+        guard let image = UIImage(named: "maintemplate") else {return}
+        photoImageView.image = image
         photoImageView.pinToSuperView()
     }
     

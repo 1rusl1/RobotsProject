@@ -51,14 +51,12 @@ class SearchViewController: UIViewController {
         }
     }
     
-    lazy var photoCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
-        return collectionView
-    }()
+    lazy var photoCollectionView = PhotoCollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        cache.removeAllObjects()
         fetchFeedImages()
         setupVC()
         
@@ -68,6 +66,8 @@ class SearchViewController: UIViewController {
     // MARK: - Setup UI elements
     
     func setupVC() {
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.title = "Photos"
         view.backgroundColor = .white
         view.addSubview(photoCollectionView)
         setupSearchBar()
@@ -79,7 +79,7 @@ class SearchViewController: UIViewController {
         photoCollectionView.pinToSuperView()
         photoCollectionView.delegate = self
         photoCollectionView.dataSource = self
-        photoCollectionView.backgroundColor = .white
+        
     }
     
     func setupSearchBar() {
@@ -150,7 +150,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: photoCellIdentifier, for: indexPath) as! PhotoCell
-        cell.backgroundColor = .gray
+        cell.backgroundColor = .lightGray
         
         if let image = cache.object(forKey: photosArray[indexPath.row].id as AnyObject) {
             cell.photoImageView.image = image

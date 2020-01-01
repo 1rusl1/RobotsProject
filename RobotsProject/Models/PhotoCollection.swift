@@ -8,7 +8,9 @@
 
 import Foundation
 
-struct PhotoCollection {
-    let name: String
-    let photos: [Photo]?
+struct PhotoCollection: Decodable {
+    let id: Int
+    let title: String
+    let totalPhotos: Int
+    let coverPhoto: Photo
 }

@@ -19,7 +19,7 @@ class MainTabBarController: UITabBarController {
         let mainVC = createNavController(vc: MainViewController(), title: "Main", image: UIImage(named: "photo"))
         addChild(mainVC)
         addChild(createNavController(vc: SearchViewController(), title: "Search", image: UIImage(named: "search")))
-        addChild(createNavController(vc: CollectionsViewController(), title: "Collections", image: UIImage(named: "collection")))
+        addChild(createNavController(vc: CollectionsListViewController(), title: "Collections", image: UIImage(named: "collection")))
     }
     
     private func createNavController(vc: UIViewController, title: String, image: UIImage?) -> UINavigationController {
