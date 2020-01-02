@@ -16,7 +16,7 @@ struct DownloadCollectionsResource: DownloadApiResource {
     
     var pageNumber = Int()
     
-    let itemsPerPage = 30
+    let itemsPerPage = 15
     
     let accessKey = "93e0a185df414cc1d0351dc2238627b7e5af3a64bb228244bc925346485f1f44"
     

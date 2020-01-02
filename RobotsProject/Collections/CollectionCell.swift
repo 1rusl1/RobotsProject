@@ -2,7 +2,7 @@
 //  CollectionCell.swift
 //  RobotsProject
 //
-//  Created by Ruslan Sabirov on 01.01.2020.
+//  Created by Ruslan Sabirov on 02.01.2020.
 //  Copyright © 2020 Ruslan Sabirov. All rights reserved.
 //
 
@@ -11,9 +11,14 @@ import UIKit
 class CollectionCell: UITableViewCell {
 
     @IBOutlet weak var coverImageView: UIImageView!
+    
     @IBOutlet weak var nameLabel: UILabel!
     
     @IBOutlet weak var countLabel: UILabel!
+    
+    @IBOutlet weak var coverImageViewHeight: NSLayoutConstraint!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

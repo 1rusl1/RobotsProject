@@ -52,15 +52,14 @@ class SearchViewController: UIViewController {
     }
     
     lazy var photoCollectionView = PhotoCollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         cache.removeAllObjects()
         fetchFeedImages()
         setupVC()
-        
-        // Do any additional setup after loading the view.
+
     }
     
     // MARK: - Setup UI elements
@@ -72,6 +71,7 @@ class SearchViewController: UIViewController {
         view.addSubview(photoCollectionView)
         setupSearchBar()
         setupCollectionView()
+        setupCollectionViewLayout()
     }
     
     func setupCollectionView() {
@@ -79,7 +79,6 @@ class SearchViewController: UIViewController {
         photoCollectionView.pinToSuperView()
         photoCollectionView.delegate = self
         photoCollectionView.dataSource = self
-        
     }
     
     func setupSearchBar() {
@@ -91,12 +90,20 @@ class SearchViewController: UIViewController {
         searchController.searchBar.delegate = self
     }
     
-    func calculateCellSize(forCollectionView cv: UICollectionView, cellsInRow: Int) -> CGSize {
-        let cvFrame = cv.frame
-        let cellWidth = cvFrame.width / CGFloat(cellsInRow)
-        let cellHeight = cellWidth
-        let spacing = (CGFloat(numberOfCellsInRow + 1) * cellOffset) / CGFloat(numberOfCellsInRow)
-        return CGSize(width: cellWidth - spacing, height: cellHeight - cellOffset * 2)
+    func setupCollectionViewLayout() {
+        let numberOfItemsPerRow = 3
+        let lineSpacing : CGFloat = 2.0
+        let interItemSpacing : CGFloat = 2.0
+        let width = (view.frame.width - (interItemSpacing * CGFloat(numberOfItemsPerRow - 1))) / CGFloat(numberOfItemsPerRow)
+        let height = width
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: width, height: height)
+        layout.sectionInset = UIEdgeInsets.zero
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = lineSpacing
+        layout.minimumInteritemSpacing = interItemSpacing
+        photoCollectionView.setCollectionViewLayout(layout, animated: true)
+        
     }
     
     func loadMore(_ pageNumber: Int) {
@@ -173,24 +180,8 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 //MARK: - UICollectionViewDelegateFlowLayout
 
-extension SearchViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return calculateCellSize(forCollectionView: photoCollectionView, cellsInRow: numberOfCellsInRow)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return cellOffset
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return cellOffset
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets.init(top: 5, left: 5, bottom: 5, right: 5)
-    }
-    
+extension SearchViewController: UIScrollViewDelegate {
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height

@@ -25,6 +25,7 @@ class CollectionsListViewController: UIViewController {
         super.viewDidLoad()
         setupVC()
         fetchCollections()
+        collectionsTableView.reloadData()
         // Do any additional setup after loading the view.
     }
     
@@ -32,7 +33,6 @@ class CollectionsListViewController: UIViewController {
         fetcher.loadItems(resource: &resource, pageNumber: 1) { [weak self] (collections) in
             guard let collections = collections else {return}
             self?.collectionsArray = collections
-            print (self?.collectionsArray)
             self?.collectionsTableView.reloadData()
         }
     }
@@ -51,7 +51,6 @@ class CollectionsListViewController: UIViewController {
         collectionsTableView.delegate = self
         collectionsTableView.dataSource = self
         collectionsTableView.register(UINib(nibName: cellNibName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
-        
     }
 
 }
@@ -65,13 +64,16 @@ extension CollectionsListViewController: UITableViewDelegate, UITableViewDataSou
         
         let cell = collectionsTableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! CollectionCell
         let coverPhoto = collectionsArray[indexPath.row].coverPhoto
+        let ratio = CGFloat(coverPhoto.width) / CGFloat(coverPhoto.height)
+        cell.coverImageViewHeight.constant = cell.coverImageView.frame.width / ratio
         if let image = cache.object(forKey: coverPhoto.id as AnyObject) {
             cell.coverImageView.image = image
         } else {
             guard let urlString = coverPhoto.urls[PhotoURL.thumb.rawValue] else { return cell }
-            cell.coverImageView.imageFromURL(urlString: urlString)
-            guard let image = cell.coverImageView.image else {return cell}
-            cache.setObject(image, forKey: coverPhoto.id as AnyObject)
+            UIImage.imageWithURL(urlString: urlString) { [weak self] (image) in
+                cell.coverImageView.image = image
+                self?.cache.setObject(image, forKey: self?.collectionsArray[indexPath.row].id as AnyObject)
+            }
         }
         cell.nameLabel.text = collectionsArray[indexPath.row].title
         cell.countLabel.text = "Photos: \(collectionsArray[indexPath.row].totalPhotos)"
@@ -85,4 +87,6 @@ extension CollectionsListViewController: UITableViewDelegate, UITableViewDataSou
         photosResource.id = collectionsArray[indexPath.row].id
         navigationController?.pushViewController(CollectionViewController(resource: photosResource), animated: true)
     }
+    
+    
 }

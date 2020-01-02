@@ -11,52 +11,53 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleAspectFit" selectionStyle="default" indentationWidth="10" reuseIdentifier="CollectionCell" rowHeight="241" id="KGk-i7-Jjw" customClass="CollectionCell" customModule="RobotsProject" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="501" height="241"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="253" id="KGk-i7-Jjw" customClass="CollectionCell" customModule="RobotsProject" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="549" height="253"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="501" height="240.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="549" height="252.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="z8o-Ek-NrD">
-                        <rect key="frame" x="30" y="21" width="200" height="200"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="120" translatesAutoresizingMaskIntoConstraints="NO" id="hSf-L7-f24">
+                        <rect key="frame" x="25" y="16" width="200" height="200"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="200" identifier="UIIMAGEHEIGHT" id="RU6-V6-29I"/>
-                            <constraint firstAttribute="width" constant="200" identifier="UIIMAGEWIDTH" id="wVc-jc-bVh"/>
+                            <constraint firstAttribute="height" constant="200" id="FHS-3s-Or5"/>
+                            <constraint firstAttribute="width" constant="200" id="ntv-mi-T6c"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7QI-lA-Bo6">
-                        <rect key="frame" x="240" y="21" width="231" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SPt-3B-9FL">
+                        <rect key="frame" x="235" y="16" width="284" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kI3-P2-Yud" userLabel="Count Label">
-                        <rect key="frame" x="240" y="200" width="231" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6PJ-v7-txp">
+                        <rect key="frame" x="235" y="45" width="284" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="kI3-P2-Yud" firstAttribute="leading" secondItem="z8o-Ek-NrD" secondAttribute="trailing" constant="10" identifier="COVERIMAGETOCOUNTLABEL" id="3DK-em-Qc5"/>
-                    <constraint firstItem="7QI-lA-Bo6" firstAttribute="top" secondItem="z8o-Ek-NrD" secondAttribute="top" identifier="NAMELABELTOP" id="7L7-l8-7jd"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="z8o-Ek-NrD" secondAttribute="bottom" constant="10" identifier="UIIMAGEVIEWBOTTOM" id="9TW-7B-sG4"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="7QI-lA-Bo6" secondAttribute="trailing" constant="10" identifier="NAMELABELTRAILING" id="AMs-Uc-3Kj"/>
-                    <constraint firstItem="z8o-Ek-NrD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" identifier="UIIMAGEVIEWLEADING" id="Emv-a3-svH"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="kI3-P2-Yud" secondAttribute="trailing" constant="10" identifier="COUNTLABELTRIALING" id="OJJ-XS-hAx"/>
-                    <constraint firstItem="kI3-P2-Yud" firstAttribute="bottom" secondItem="z8o-Ek-NrD" secondAttribute="bottom" identifier="COUNTLABELBOTTOM" id="REu-9c-paJ"/>
-                    <constraint firstItem="z8o-Ek-NrD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" identifier="UIIMAGEVIEWTOP" id="jOc-Co-x4M"/>
-                    <constraint firstItem="7QI-lA-Bo6" firstAttribute="leading" secondItem="z8o-Ek-NrD" secondAttribute="trailing" constant="10" identifier="COVERIMAGETONAMELABEL" id="uDP-st-HHA"/>
+                    <constraint firstItem="6PJ-v7-txp" firstAttribute="top" secondItem="SPt-3B-9FL" secondAttribute="bottom" constant="8" symbolic="YES" id="0rO-Ze-dvs"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="SPt-3B-9FL" secondAttribute="trailing" constant="10" id="5pT-DE-ngb"/>
+                    <constraint firstItem="hSf-L7-f24" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" constant="5" id="A0e-AF-J76"/>
+                    <constraint firstItem="SPt-3B-9FL" firstAttribute="leading" secondItem="hSf-L7-f24" secondAttribute="trailing" constant="10" id="IJo-wv-gEg"/>
+                    <constraint firstItem="hSf-L7-f24" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="IR2-kW-BCW"/>
+                    <constraint firstItem="6PJ-v7-txp" firstAttribute="leading" secondItem="hSf-L7-f24" secondAttribute="trailing" constant="10" id="N3l-Hl-5aE"/>
+                    <constraint firstItem="SPt-3B-9FL" firstAttribute="top" secondItem="hSf-L7-f24" secondAttribute="top" id="nYw-Ad-kpQ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="6PJ-v7-txp" secondAttribute="trailing" constant="10" id="oko-7Z-D7z"/>
+                    <constraint firstItem="hSf-L7-f24" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="qyz-AT-jkG"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="countLabel" destination="kI3-P2-Yud" id="LwX-Si-q7d"/>
-                <outlet property="coverImageView" destination="z8o-Ek-NrD" id="Gvr-yt-Yks"/>
-                <outlet property="nameLabel" destination="7QI-lA-Bo6" id="EKm-y8-EgX"/>
+                <outlet property="countLabel" destination="6PJ-v7-txp" id="jJy-tZ-ejq"/>
+                <outlet property="coverImageView" destination="hSf-L7-f24" id="o09-nv-aiz"/>
+                <outlet property="coverImageViewHeight" destination="FHS-3s-Or5" id="22d-vB-Lrr"/>
+                <outlet property="nameLabel" destination="SPt-3B-9FL" id="PJb-bn-9lU"/>
             </connections>
-            <point key="canvasLocation" x="-223.19999999999999" y="108.39580209895054"/>
+            <point key="canvasLocation" x="-15.199999999999999" y="204.64767616191907"/>
         </tableViewCell>
     </objects>
 </document>

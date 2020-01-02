@@ -113,9 +113,3 @@ extension PhotoDetailController : UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension UIImage {
-    func getCropRatio() -> CGFloat {
-        let ratio = self.size
-        return CGFloat(self.size.width / self.size.height)
-    }
-}

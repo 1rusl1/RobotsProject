@@ -28,6 +28,8 @@ extension UIImageView {
             DispatchQueue.main.async {
                 guard let data = data, let image = UIImage(data: data) else {return}
                 activityIndicator.removeFromSuperview()
+//                let ratio = image.getCropRatio()
+//                self.frame.size.height = self.frame.width / ratio
                 self.image = image
             }
                         
@@ -46,9 +48,18 @@ extension UIImage {
             }
             DispatchQueue.main.async {
                 guard let data = data, let image = UIImage(data: data) else {return}
+                
                 completion(image)
             }
             
         }).resume()
     }
 }
+
+extension UIImage {
+    func getCropRatio() -> CGFloat {
+        let ratio = CGFloat(self.size.width) / CGFloat(self.size.height)
+        return ratio
+    }
+}
+

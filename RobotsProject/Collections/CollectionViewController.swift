@@ -79,11 +79,9 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
         
         if let image = cache.object(forKey: photosArray[indexPath.row].id as AnyObject) {
             cell.photoImageView.image = image
-            print ("image from cache")
         } else {
             guard let urlString = photosArray[indexPath.row].urls[PhotoURL.regular.rawValue] else { return cell }
             UIImage.imageWithURL(urlString: urlString) { [weak self] (image) in
-                print("Image request")
                 cell.photoImageView.image = image
                 self?.cache.setObject(image, forKey: self?.photosArray[indexPath.row].id as AnyObject)
             }
