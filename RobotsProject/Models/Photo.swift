@@ -14,7 +14,7 @@ struct Photo: Decodable {
     let width: Int
     let height: Int
     let description: String?
-    let urls: [PhotoURL.RawValue: String] // проблема в урл
+    let urls: [PhotoURL.RawValue: String]
 
 }
 

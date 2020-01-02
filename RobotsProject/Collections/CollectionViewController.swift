@@ -14,7 +14,7 @@ class CollectionViewController: UIViewController {
     
     var cache = NSCache<AnyObject, UIImage>()
     
-    var resource : PhotosFromCollectionResource
+    var resource : CollectionPhotoResource
     
     let fetcher = NetworkDataFetcher()
     
@@ -25,7 +25,7 @@ class CollectionViewController: UIViewController {
         return collection
     }()
     
-    init(resource: PhotosFromCollectionResource) {
+    init(resource: CollectionPhotoResource) {
         self.resource = resource
         super.init(nibName: nil, bundle: nil)
     }
@@ -64,8 +64,7 @@ class CollectionViewController: UIViewController {
             self?.photoCollectionView.reloadData()
         }
     }
-    
-    
+
 }
 
 extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -85,9 +84,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
                 cell.photoImageView.image = image
                 self?.cache.setObject(image, forKey: self?.photosArray[indexPath.row].id as AnyObject)
             }
-            //cell.photoImageView.imageFromURL(urlString: urlString)
-            //guard let image = cell.photoImageView.image else {return cell}
-            //cache.setObject(image, forKey: photosArray[indexPath.row].id as AnyObject)
+
         }
         
         return cell

@@ -1,35 +1,25 @@
 //
-//  PhotosFromCollectionResource.swift
+//  DownloadSingleItemResource.swift
 //  RobotsProject
 //
-//  Created by Ruslan Sabirov on 01.01.2020.
-//  Copyright © 2020 Ruslan Sabirov. All rights reserved.
+//  Created by Ruslan Sabirov on 30.12.2019.
+//  Copyright © 2019 Ruslan Sabirov. All rights reserved.
 //
 
 import Foundation
 
-struct PhotosFromCollectionResource: DownloadApiResource {
+struct RandomPhotoResource: RandomItemApiResource {
+    var id: String
+    
     
     typealias ModelType = Photo
     
-    var id = Int()
-    
-    var methodPath : String {
-        return "/collections/\(id)/photos"
-    }
-    
-    var pageNumber = Int()
-    
-    let itemsPerPage = 30
+    var methodPath = "/photos/random"
     
     let accessKey = "93e0a185df414cc1d0351dc2238627b7e5af3a64bb228244bc925346485f1f44"
     
     var parameters: [String: String] {
         var params = [String: String]()
-        params["page"] = String(pageNumber)
-        params["per_page"] = String(itemsPerPage)
-        params["client_id"] = accessKey
-        params["id"] = String(id)
         return params
     }
     

@@ -10,7 +10,7 @@ import UIKit
 
 class CollectionsListViewController: UIViewController {
     
-    lazy var resource = DownloadCollectionsResource()
+    lazy var resource = CollectionsResource()
     lazy var fetcher = NetworkDataFetcher()
     
     lazy var collectionsTableView = UITableView()
@@ -52,7 +52,7 @@ class CollectionsListViewController: UIViewController {
         collectionsTableView.dataSource = self
         collectionsTableView.register(UINib(nibName: cellNibName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
     }
-
+    
 }
 
 extension CollectionsListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -83,7 +83,7 @@ extension CollectionsListViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        var photosResource = PhotosFromCollectionResource()
+        var photosResource = CollectionPhotoResource()
         photosResource.id = collectionsArray[indexPath.row].id
         navigationController?.pushViewController(CollectionViewController(resource: photosResource), animated: true)
     }

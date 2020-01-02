@@ -18,7 +18,7 @@ class SearchViewController: UIViewController {
     lazy var searchText = String()
     let fetcher = NetworkDataFetcher()
     lazy var searchPhotoResource = SearchPhotoResource()
-    lazy var downloadPhotosResource = DownloadPhotosResource()
+    lazy var downloadPhotosResource = PhotoResource()
     
     let photoCellIdentifier = "PhotoCell"
     let numberOfCellsInRow = 3
@@ -158,7 +158,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: photoCellIdentifier, for: indexPath) as! PhotoCell
         cell.backgroundColor = .lightGray
-        
         if let image = cache.object(forKey: photosArray[indexPath.row].id as AnyObject) {
             cell.photoImageView.image = image
             print ("image from cache")

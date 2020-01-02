@@ -1,5 +1,5 @@
 //
-//  DownloadCollectionsResource.swift
+//  PhotosFromCollectionResource.swift
 //  RobotsProject
 //
 //  Created by Ruslan Sabirov on 01.01.2020.
@@ -8,15 +8,19 @@
 
 import Foundation
 
-struct DownloadCollectionsResource: DownloadApiResource {
+struct CollectionPhotoResource: DownloadApiResource {
     
-    typealias ModelType = PhotoCollection
+    typealias ModelType = Photo
     
-    var methodPath = "/collections"
+    var id = Int()
+    
+    var methodPath : String {
+        return "/collections/\(id)/photos"
+    }
     
     var pageNumber = Int()
     
-    let itemsPerPage = 15
+    let itemsPerPage = 30
     
     let accessKey = "93e0a185df414cc1d0351dc2238627b7e5af3a64bb228244bc925346485f1f44"
     
@@ -25,6 +29,7 @@ struct DownloadCollectionsResource: DownloadApiResource {
         params["page"] = String(pageNumber)
         params["per_page"] = String(itemsPerPage)
         params["client_id"] = accessKey
+        params["id"] = String(id)
         return params
     }
     
@@ -36,5 +41,4 @@ struct DownloadCollectionsResource: DownloadApiResource {
         components.queryItems = parameters.map {URLQueryItem(name: $0, value: $1)}
         return components.url!
     }
-    
 }

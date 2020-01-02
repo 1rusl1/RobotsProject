@@ -22,11 +22,6 @@ class PhotoDetailController: UIViewController {
         return widthRatio
     }
     
-    var cropRatio: CGFloat {
-        let ratio = CGFloat(photo.width / photo.height)
-        return ratio
-    }
-    
     let cache = NSCache<AnyObject, UIImage>()
     
     override func viewDidLoad() {

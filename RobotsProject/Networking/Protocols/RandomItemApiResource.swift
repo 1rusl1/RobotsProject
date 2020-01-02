@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol SingleItemApiResource {
+protocol RandomItemApiResource {
     associatedtype ModelType: Decodable
     var methodPath: String { get }
     var id: String { get set }

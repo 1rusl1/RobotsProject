@@ -28,8 +28,6 @@ extension UIImageView {
             DispatchQueue.main.async {
                 guard let data = data, let image = UIImage(data: data) else {return}
                 activityIndicator.removeFromSuperview()
-//                let ratio = image.getCropRatio()
-//                self.frame.size.height = self.frame.width / ratio
                 self.image = image
             }
                         
