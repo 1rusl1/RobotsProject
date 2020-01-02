@@ -96,8 +96,10 @@ extension PhotoDetailController : UITableViewDelegate, UITableViewDataSource {
             case 3:
                 guard let link = photo.urls[PhotoURL.raw.rawValue] else {return cell}
                 cell.textLabel?.text = "Full size link: \(link)"
+                cell.textLabel?.numberOfLines = 0
             default:
                 cell.textLabel?.text = photo.description ?? "No decription"
+                cell.textLabel?.numberOfLines = 0
             }
             return cell
         }

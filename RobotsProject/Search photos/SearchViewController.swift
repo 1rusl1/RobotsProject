@@ -176,6 +176,12 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let photo = photosArray[indexPath.item]
+        let detailController = PhotoDetailController(photo: photo)
+        navigationController?.pushViewController(detailController, animated: true)
+    }
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout

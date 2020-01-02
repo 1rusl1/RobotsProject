@@ -110,6 +110,7 @@
 				D23CA62323ADFAD500C62E14 /* Photo of the day */,
 				D23CA62923ADFF2000C62E14 /* Search photos */,
 				D23CA62623ADFAF600C62E14 /* Collections */,
+				D26D7B7F23BE6A6C00EDFCE9 /* Photo detail */,
 				D21B4F9823AD23CA002E44DB /* Assets.xcassets */,
 				D21B4F9A23AD23CA002E44DB /* LaunchScreen.storyboard */,
 				D21B4F9D23AD23CA002E44DB /* Info.plist */,
@@ -149,8 +150,6 @@
 			children = (
 				D23CA62423ADFAF000C62E14 /* CollectionsListViewController.swift */,
 				D21A0DDD23BCBA7F00FB1867 /* CollectionViewController.swift */,
-				D21A0DF123BCDE9900FB1867 /* PhotoDetailController.swift */,
-				D21A0DF323BCE11B00FB1867 /* FullPhotoCell.swift */,
 				D26D7B7623BE4C8C00EDFCE9 /* ScaledImageView.swift */,
 				D26D7B7A23BE56B700EDFCE9 /* CollectionCell.swift */,
 				D26D7B7B23BE56B700EDFCE9 /* CollectionCell.xib */,
@@ -176,6 +175,15 @@
 				D2AC5F6C23B8E0E200ABF10F /* Resources */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		D26D7B7F23BE6A6C00EDFCE9 /* Photo detail */ = {
+			isa = PBXGroup;
+			children = (
+				D21A0DF123BCDE9900FB1867 /* PhotoDetailController.swift */,
+				D21A0DF323BCE11B00FB1867 /* FullPhotoCell.swift */,
+			);
+			path = "Photo detail";
 			sourceTree = "<group>";
 		};
 		D2AC5F6B23B8E0BD00ABF10F /* Protocols */ = {
