@@ -17,10 +17,14 @@ class PhotoDetailController: UIViewController {
     var photo: Photo
     let textCellSize = CGFloat(50)
     let numberOfCells = 5
+    var ratio: CGFloat {
+        let widthRatio = CGFloat(photo.width) / CGFloat(photo.height)
+        return widthRatio
+    }
     
     var cropRatio: CGFloat {
-        let ratio = photo.width / photo.height
-        return CGFloat(ratio)
+        let ratio = CGFloat(photo.width / photo.height)
+        return ratio
     }
     
     let cache = NSCache<AnyObject, UIImage>()
@@ -41,8 +45,6 @@ class PhotoDetailController: UIViewController {
     }
     
     func setupVC() {
-        //        navigationController?.navigationBar.prefersLargeTitles = true
-        //        navigationItem.title = "Collections"
         view.backgroundColor = .white
         view.addSubview(photoTableView)
         setupTableView()
@@ -104,17 +106,16 @@ extension PhotoDetailController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            let height = CGFloat(photoTableView.frame.width / cropRatio)
-            return height.rounded(.toNearestOrEven)
+            return tableView.frame.size.width / ratio
         } else {
             return textCellSize
         }
-}
+    }
 }
 
-//extension UIImage {
-//    func getCropRatio() -> CGFloat {
-//        var widthRatio = self.size.width / self.size.height
-//        return CGFloat (widthRatio)
-//    }
-//}
+extension UIImage {
+    func getCropRatio() -> CGFloat {
+        let ratio = self.size
+        return CGFloat(self.size.width / self.size.height)
+    }
+}
