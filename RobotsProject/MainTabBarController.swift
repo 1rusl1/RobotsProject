@@ -24,7 +24,6 @@ class MainTabBarController: UITabBarController {
         createTabBarChilds()
     }
 
-
     private func createTabBarChilds() {
         addChild(createNavController(vc: PhotoOfTheDayController(), title: "Photo of the day", image: UIImage(named: "photo")))
         addChild(createNavController(vc: SearchViewController(), title: "Search", image: UIImage(named: "search")))

@@ -18,7 +18,7 @@ struct CollectionsResource: DownloadItemsApiResource {
     
     let itemsPerPage = 15
     
-    let accessKey = "93e0a185df414cc1d0351dc2238627b7e5af3a64bb228244bc925346485f1f44"
+    let accessKey = "33a3c29c943928186b10d377ea12e8957afd269adcd7d78507794583d2846a26"
     
     var parameters: [String: String] {
         var params = [String: String]()

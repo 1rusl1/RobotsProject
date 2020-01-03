@@ -32,33 +32,31 @@ class SearchViewController: UIViewController {
         didSet {
             if searchText.count > 0 {
                 if photoSearchResults.totalPages > currentPage {
-                    fetcher.searchForItem(resource: &searchPhotoResource, searchTerm: searchText, pageNumber: currentPage) { [weak self] (results) in
-                        guard let results = results else {return}
-                        self?.photosArray.append(contentsOf: results.results)
-                        self?.loadingMore = false
-                        self?.photoCollectionView.reloadData()
-                    }
+                    fetchSearchResults(pageNumber: currentPage, searchTerm: searchText)
+                    print ("Fetch search results")
                 }
             } else {
-            fetcher.loadItems(resource: &downloadPhotosResource, pageNumber: currentPage) { [weak self] (photo) in
-                guard let photo = photo else {return}
-                self?.photosArray.append(contentsOf: photo)
-                self?.loadingMore = false
-                self?.photoCollectionView.reloadData()
+                fetchFeedImages(pageNumber: currentPage)
+                print ("Fetch feed images")
+                //            fetcher.loadItems(resource: &downloadPhotosResource, pageNumber: currentPage) { [weak self] (photo) in
+                //                guard let photo = photo else {return}
+                //                self?.photosArray.append(contentsOf: photo)
+                //                self?.loadingMore = false
+                //                self?.photoCollectionView.reloadData()
+                //            }
             }
-        }
         }
     }
     
     lazy var photoCollectionView = PhotoCollectionView(frame: view.frame, collectionViewLayout: WaterfallLayout())
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         cache.removeAllObjects()
-        fetchFeedImages()
+        fetchFeedImages(pageNumber: 1)
         setupVC()
-
+        
     }
     
     // MARK: - Setup UI elements
@@ -95,17 +93,26 @@ class SearchViewController: UIViewController {
         currentPage += 1
     }
     
-    func fetchFeedImages() {
-        fetcher.loadItems(resource: &downloadPhotosResource, pageNumber: 1) { [weak self] (photo) in
+    func fetchFeedImages(pageNumber: Int) {
+        fetcher.loadItems(resource: &downloadPhotosResource, pageNumber: pageNumber) { [weak self] (photo) in
             guard let photo = photo else {return}
-            self?.photosArray = photo
-            DispatchQueue.main.async {
-                self?.photoCollectionView.reloadData()
-            }
+            self?.photosArray.append(contentsOf: photo)
+            self?.loadingMore = false
+            self?.photoCollectionView.reloadData()
+            print ("Fetch feed images")
         }
-        
     }
     
+    func fetchSearchResults(pageNumber: Int, searchTerm: String) {
+        fetcher.searchForItem(resource: &searchPhotoResource, searchTerm: searchTerm, pageNumber: pageNumber) { [weak self] (results) in
+            guard let results = results else {return}
+            self?.photoSearchResults = results
+            print ("RESULTS TOTAL PAGES: \(self?.photoSearchResults.totalPages)")
+            self?.photosArray.append(contentsOf: results.results)
+            self?.loadingMore = false
+            self?.photoCollectionView.reloadData()
+        }
+    }
 }
 
 //MARK: - UISearchBarDelegate
@@ -117,19 +124,18 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchText = ""
         cache.removeAllObjects()
-        currentPage = 1
-        fetchFeedImages()
+        photosArray.removeAll()
+        fetchFeedImages(pageNumber: 1)
+        print ("SEARCH TEXT: \(searchText)")
+        //currentPage = 1
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         cache.removeAllObjects()
-        fetcher.searchForItem(resource: &searchPhotoResource, searchTerm: searchText, pageNumber: 1) { [weak self] (searchResults) in
-            guard let results = searchResults else {return}
-            self?.photoSearchResults = results
-            self?.photosArray = results.results
-            self?.photoCollectionView.reloadData()
-        }
+        photosArray.removeAll()
+        fetchSearchResults(pageNumber: 1, searchTerm: searchText)
     }
 }
 
@@ -167,12 +173,12 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
 //MARK: - UICollectionViewDelegateFlowLayout
 
 extension SearchViewController: UIScrollViewDelegate {
-
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         if offsetY > contentHeight - scrollView.frame.height && contentHeight != 0 {
-            
+            print ("load more")
             if loadingMore != true {
                 loadMore(currentPage)
                 loadingMore = true
