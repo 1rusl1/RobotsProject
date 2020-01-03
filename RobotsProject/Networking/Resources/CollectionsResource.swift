@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CollectionsResource: DownloadApiResource {
+struct CollectionsResource: DownloadItemsApiResource {
     
     typealias ModelType = PhotoCollection
     

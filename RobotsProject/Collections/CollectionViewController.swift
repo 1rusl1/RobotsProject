@@ -14,19 +14,37 @@ class CollectionViewController: UIViewController {
     
     var cache = NSCache<AnyObject, UIImage>()
     
-    var resource : CollectionPhotoResource
+    var collection: PhotoCollection
+    
+    var resource = CollectionPhotoResource()
     
     let fetcher = NetworkDataFetcher()
+    
+    let photosPerPage = 30
+    
+    var collectionTotalPages: Int {
+        return collection.totalPhotos / photosPerPage
+    }
     
     lazy var photosArray = [Photo]()
     
     lazy var photoCollectionView: PhotoCollectionView = {
-        let collection = PhotoCollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
+        let collection = PhotoCollectionView(frame: view.frame, collectionViewLayout: WaterfallLayout())
         return collection
     }()
     
-    init(resource: CollectionPhotoResource) {
-        self.resource = resource
+    var loadingMore = false
+    
+    var currentPage = 1 {
+        didSet {
+            print ("CurrentPage: \(currentPage)")
+            fetchCollectionPhoto(pageNumber: currentPage)
+        }
+    }
+    
+    init(collection: PhotoCollection) {
+        self.collection = collection
+        resource.id = collection.id
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -36,12 +54,13 @@ class CollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        cache.removeAllObjects()
         setupVC()
-        fetchCollectionPhoto()
+        fetchCollectionPhoto(pageNumber: 1)
         
         // Do any additional setup after loading the view.
     }
-    
+    //MARK: - Setup UI elements
     func setupVC() {
         navigationController?.navigationBar.prefersLargeTitles = false
         view.backgroundColor = .white
@@ -54,19 +73,33 @@ class CollectionViewController: UIViewController {
         photoCollectionView.pinToSuperView()
         photoCollectionView.delegate = self
         photoCollectionView.dataSource = self
-        
+        if let layout = photoCollectionView.collectionViewLayout as? WaterfallLayout {
+            layout.delegate = self
+        }
     }
-    
-    func fetchCollectionPhoto() {
-        fetcher.loadItems(resource: &resource, pageNumber: 1) { [weak self] (photos) in
+    //MARK: - Fetching data
+    func fetchCollectionPhoto(pageNumber: Int) {
+        print ("FETCH COLLECTION PHOTO, page number: \(pageNumber)")
+        fetcher.loadItems(resource: &resource, pageNumber: pageNumber) { [weak self] (photos) in
             guard let photos = photos else {return}
+            if pageNumber == 1 {
             self?.photosArray = photos
+            } else {
+            self?.photosArray.append(contentsOf: photos)
+            }
+            self?.loadingMore = false
             self?.photoCollectionView.reloadData()
         }
     }
 
-}
+    func loadMore() {
+        if currentPage < collectionTotalPages {
+        currentPage += 1
+        }
+    }
 
+}
+//MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photosArray.count
@@ -84,9 +117,7 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
                 cell.photoImageView.image = image
                 self?.cache.setObject(image, forKey: self?.photosArray[indexPath.row].id as AnyObject)
             }
-
         }
-        
         return cell
     }
     
@@ -96,5 +127,28 @@ extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDa
         let detailController = PhotoDetailController(photo: photo)
         navigationController?.pushViewController(detailController, animated: true)
     }
+
+}
+//MARK: - WaterfallLayoutDelegate
+extension CollectionViewController: WaterfallLayoutDelegate {
+    func waterfallLayout(_ layout: WaterfallLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        let photo = photosArray[indexPath.item]
+        return CGSize(width: photo.width, height: photo.height)
+    }
+}
+//MARK: - UIScrollViewDelegate
+extension CollectionViewController: UIScrollViewDelegate {
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        if offsetY > contentHeight - scrollView.frame.height && contentHeight != 0 {
+            if loadingMore != true {
+                loadMore()
+                loadingMore = true
+            }
+        }
+    }
+
 }

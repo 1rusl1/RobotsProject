@@ -15,7 +15,8 @@ class PhotoDetailController: UIViewController {
     let fullPhotoIdentifier = "FullPhotoCell"
     let cellIdentifier = "cell"
     var photo: Photo
-    let textCellSize = CGFloat(50)
+    let textCellSize: CGFloat = 44
+    let linkCellSize: CGFloat = 100
     let numberOfCells = 5
     var ratio: CGFloat {
         let widthRatio = CGFloat(photo.width) / CGFloat(photo.height)
@@ -38,7 +39,7 @@ class PhotoDetailController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    //MARK: - Setup UI elements
     func setupVC() {
         view.backgroundColor = .white
         view.addSubview(photoTableView)
@@ -50,12 +51,11 @@ class PhotoDetailController: UIViewController {
         photoTableView.pinToSuperView()
         photoTableView.delegate = self
         photoTableView.dataSource = self
+        photoTableView.separatorStyle = .none
         photoTableView.register(FullPhotoCell.self, forCellReuseIdentifier: cellIdentifier)
-        
     }
-    
 }
-
+//MARK:- UITableViewDelegate, UITableViewDataSource
 extension PhotoDetailController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -96,15 +96,19 @@ extension PhotoDetailController : UITableViewDelegate, UITableViewDataSource {
                 cell.textLabel?.text = photo.description ?? "No decription"
                 cell.textLabel?.numberOfLines = 0
             }
+            
             return cell
         }
         return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
+        switch indexPath.row {
+        case 0:
             return tableView.frame.size.width / ratio
-        } else {
+        case 3:
+            return linkCellSize
+        default:
             return textCellSize
         }
     }

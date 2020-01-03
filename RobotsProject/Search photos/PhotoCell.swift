@@ -22,11 +22,7 @@ class PhotoCell: UICollectionViewCell {
         contentView.addSubview(photoImageView)
         photoImageView.pinToSuperView()
     }
-    
-    func display(_ photo: Photo) {
-        photoImageView.image = UIImage()
-    }
-    
+        
     override func prepareForReuse() {
         photoImageView.image = nil
     }

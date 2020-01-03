@@ -8,9 +8,8 @@
 
 import Foundation
 
-struct RandomPhotoResource: RandomItemApiResource {
-    var id: String
-    
+struct RandomPhotoResource: DownloadSingleItemApiResource {
+    var id = ""
     
     typealias ModelType = Photo
     
@@ -20,6 +19,7 @@ struct RandomPhotoResource: RandomItemApiResource {
     
     var parameters: [String: String] {
         var params = [String: String]()
+        params["client_id"] = accessKey
         return params
     }
     

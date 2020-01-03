@@ -8,17 +8,22 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class PhotoOfTheDayController: UIViewController {
     
-
+    
     let photoTableView = UITableView()
     
-    let numberOfCells = 1
+    let numberOfCells = 2
+    let cellHeight: CGFloat = 50
     
-    let cellIdentifier = "FullPhotoCell"
-    var photo: Photo
+    let photoCellIdentifier = "FullPhotoCell"
+    let textCellIdentifier = "TextCell"
+    var photo : Photo?
+    
+    var loadingMore = false
     
     var ratio: CGFloat {
+        guard let photo = photo else {return 1}
         let widthRatio = CGFloat(photo.width) / CGFloat(photo.height)
         return widthRatio
     }
@@ -27,18 +32,12 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        fetchMainPhoto()
         setupVC()
+        print ("View did load")
     }
     
-    init(photo: Photo) {
-        self.photo = photo
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    //MARK: - Setup UI elements
     
     func setupVC() {
         view.backgroundColor = .white
@@ -51,12 +50,24 @@ class MainViewController: UIViewController {
         photoTableView.pinToSuperView()
         photoTableView.delegate = self
         photoTableView.dataSource = self
-        photoTableView.register(FullPhotoCell.self, forCellReuseIdentifier: cellIdentifier)
-        
+        photoTableView.separatorColor = .clear
+        photoTableView.register(FullPhotoCell.self, forCellReuseIdentifier: photoCellIdentifier)
     }
+    
+    func fetchMainPhoto() {
+        let resource = RandomPhotoResource()
+        let fetcher = NetworkDataFetcher()
+        fetcher.loadSingleItem(resource: resource, id: nil) { [weak self] (photo) in
+            self?.photo = photo
+            self?.photoTableView.reloadData()
+        }
+    }
+    
 }
 
-extension MainViewController : UITableViewDelegate, UITableViewDataSource {
+//MARK: - UITableViewDelegate, UITableViewDataSource
+
+extension PhotoOfTheDayController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfCells
@@ -65,24 +76,37 @@ extension MainViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! FullPhotoCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: photoCellIdentifier) as! FullPhotoCell
             cell.backgroundColor = .lightGray
-            
+            guard let photo = photo else { return cell }
             if let image = cache.object(forKey: photo.id as AnyObject) {
                 cell.photoImageView.image = image
             } else {
                 guard let urlString = photo.urls[PhotoURL.regular.rawValue] else { return cell }
                 UIImage.imageWithURL(urlString: urlString) { [weak self] (image) in
                     cell.photoImageView.image = image
-                    self?.cache.setObject(image, forKey: self?.photo.id as AnyObject)
+                    self?.cache.setObject(image, forKey: self?.photo?.id as AnyObject)
                 }
                 return cell
             }
+        } else {
+            let cell = UITableViewCell.init(style: .default, reuseIdentifier: textCellIdentifier)
+            cell.textLabel?.text = photo?.description ?? "Photo of the day"
+            cell.textLabel?.numberOfLines = 0
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 20)
+            return cell
         }
         return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if indexPath.row == 0 {
             return tableView.frame.size.width / ratio
+        } else {
+            return cellHeight
         }
+    }
 }
+

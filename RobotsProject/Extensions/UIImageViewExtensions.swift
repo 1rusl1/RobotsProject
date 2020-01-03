@@ -30,7 +30,7 @@ extension UIImageView {
                 activityIndicator.removeFromSuperview()
                 self.image = image
             }
-                        
+            
         }).resume()
     }
 }

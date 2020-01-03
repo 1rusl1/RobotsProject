@@ -9,7 +9,7 @@
 import Foundation
 import Foundation
 
-struct PhotoResource: DownloadApiResource {
+struct PhotoResource: DownloadItemsApiResource {
 
     typealias ModelType = Photo
     

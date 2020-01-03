@@ -27,6 +27,7 @@ class SearchViewController: UIViewController {
     var cache = NSCache<AnyObject, UIImage>()
     
     var loadingMore = false
+    
     var currentPage = 1 {
         didSet {
             if searchText.count > 0 {
@@ -51,7 +52,7 @@ class SearchViewController: UIViewController {
         }
     }
     
-    lazy var photoCollectionView = PhotoCollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
+    lazy var photoCollectionView = PhotoCollectionView(frame: view.frame, collectionViewLayout: WaterfallLayout())
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +72,6 @@ class SearchViewController: UIViewController {
         view.addSubview(photoCollectionView)
         setupSearchBar()
         setupCollectionView()
-        setupCollectionViewLayout()
     }
     
     func setupCollectionView() {
@@ -79,6 +79,9 @@ class SearchViewController: UIViewController {
         photoCollectionView.pinToSuperView()
         photoCollectionView.delegate = self
         photoCollectionView.dataSource = self
+        if let layout = photoCollectionView.collectionViewLayout as? WaterfallLayout {
+            layout.delegate = self
+        }
     }
     
     func setupSearchBar() {
@@ -88,22 +91,6 @@ class SearchViewController: UIViewController {
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
-    }
-    
-    func setupCollectionViewLayout() {
-        let numberOfItemsPerRow = 3
-        let lineSpacing : CGFloat = 2.0
-        let interItemSpacing : CGFloat = 2.0
-        let width = (view.frame.width - (interItemSpacing * CGFloat(numberOfItemsPerRow - 1))) / CGFloat(numberOfItemsPerRow)
-        let height = width
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: width, height: height)
-        layout.sectionInset = UIEdgeInsets.zero
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = lineSpacing
-        layout.minimumInteritemSpacing = interItemSpacing
-        photoCollectionView.setCollectionViewLayout(layout, animated: true)
-        
     }
     
     func loadMore(_ pageNumber: Int) {
@@ -133,6 +120,7 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         cache.removeAllObjects()
+        currentPage = 1
         fetchFeedImages()
     }
     
@@ -168,9 +156,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
                 cell.photoImageView.image = image
                 self?.cache.setObject(image, forKey: self?.photosArray[indexPath.row].id as AnyObject)
             }
-            //cell.photoImageView.imageFromURL(urlString: urlString)
-            //guard let image = cell.photoImageView.image else {return cell}
-            //cache.setObject(image, forKey: photosArray[indexPath.row].id as AnyObject)
         }
         
         return cell
@@ -190,11 +175,20 @@ extension SearchViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
-        if offsetY > contentHeight - scrollView.frame.height {
+        if offsetY > contentHeight - scrollView.frame.height && contentHeight != 0 {
+            
             if loadingMore != true {
                 loadMore(currentPage)
                 loadingMore = true
             }
         }
+    }
+}
+
+extension SearchViewController: WaterfallLayoutDelegate {
+    func waterfallLayout(_ layout: WaterfallLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let photo = photosArray[indexPath.item]
+        return CGSize(width: photo.width, height: photo.height)
     }
 }

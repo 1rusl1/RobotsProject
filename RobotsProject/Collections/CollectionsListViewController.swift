@@ -21,22 +21,24 @@ class CollectionsListViewController: UIViewController {
     
     lazy var cache = NSCache<AnyObject, UIImage>()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupVC()
-        fetchCollections()
-        collectionsTableView.reloadData()
-        // Do any additional setup after loading the view.
-    }
+    var loadingMore = false
     
-    func fetchCollections() {
-        fetcher.loadItems(resource: &resource, pageNumber: 1) { [weak self] (collections) in
-            guard let collections = collections else {return}
-            self?.collectionsArray = collections
-            self?.collectionsTableView.reloadData()
+    var currentPage = 1 {
+        didSet {
+            fetchCollections(pageNumber: currentPage)
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        cache.removeAllObjects()
+        setupVC()
+        fetchCollections(pageNumber: 1)
+        collectionsTableView.delegate = self
+        collectionsTableView.reloadData()
+    }
+
+    //MARK: - Setup UI elements
     func setupVC() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Collections"
@@ -48,13 +50,30 @@ class CollectionsListViewController: UIViewController {
     func setupTableView() {
         collectionsTableView.translatesAutoresizingMaskIntoConstraints = false
         collectionsTableView.pinToSuperView()
-        collectionsTableView.delegate = self
         collectionsTableView.dataSource = self
         collectionsTableView.register(UINib(nibName: cellNibName, bundle: nil), forCellReuseIdentifier: cellIdentifier)
     }
+    //MARK: - Fetching data
+    func fetchCollections(pageNumber: Int) {
+        fetcher.loadItems(resource: &resource, pageNumber: pageNumber) { [weak self] (collections) in
+            guard let collections = collections else {return}
+            if pageNumber == 1 {
+                self?.collectionsArray = collections
+            } else {
+                self?.collectionsArray.append(contentsOf: collections)
+            }
+            self?.loadingMore = false
+            self?.collectionsTableView.reloadData()
+            print ("FETCH COLLECTIONS")
+        }
+    }
+    
+    func loadMore() {
+        currentPage += 1
+    }
     
 }
-
+//MARK:- UITableViewDelegate, UITableViewDataSource
 extension CollectionsListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return collectionsArray.count
@@ -83,10 +102,25 @@ extension CollectionsListViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        var photosResource = CollectionPhotoResource()
-        photosResource.id = collectionsArray[indexPath.row].id
-        navigationController?.pushViewController(CollectionViewController(resource: photosResource), animated: true)
+        let collection = collectionsArray[indexPath.row]
+        navigationController?.pushViewController(CollectionViewController(collection: collection), animated: true)
     }
     
+}
+
+//MARK: - UIScrollViewDelegate
+extension CollectionsListViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        if offsetY > contentHeight - scrollView.frame.height {
+            print ("Load more")
+            if loadingMore != true {
+                loadMore()
+                loadingMore = true
+            }
+        }
+    }
     
 }

@@ -19,7 +19,8 @@ class NetworkDataFetcher {
     func searchForItem<T: SearchApiResource>(resource: inout T, searchTerm: String, pageNumber: Int, completion: @escaping (T.ModelType?) -> Void ) {
         resource.searchTerm = searchTerm
         resource.pageNumber = pageNumber
-        let task = URLSession.shared.dataTask(with: resource.url) { [weak self] (data, response, error) in
+        
+        _ = URLSession.shared.dataTask(with: resource.url) { [weak self] (data, response, error) in
             if let error = error {
                 print ("Error received requesting data: \(error.localizedDescription)")
                 completion(nil)
@@ -29,12 +30,13 @@ class NetworkDataFetcher {
                     completion(decodedData)
                 }
             }
-        }.resume()
+            }.resume()
     }
     
-    func loadItems<T: DownloadApiResource>(resource: inout T, pageNumber: Int, completion: @escaping ([T.ModelType]?) -> Void) {
+    func loadItems<T: DownloadItemsApiResource>(resource: inout T, pageNumber: Int, completion: @escaping ([T.ModelType]?) -> Void) {
         resource.pageNumber = pageNumber
-        let task = URLSession.shared.dataTask(with: resource.url) { [weak self] (data, response, error) in
+         print (resource.url)
+        _ = URLSession.shared.dataTask(with: resource.url) { [weak self] (data, response, error) in
             if let error = error {
                 print("Error received requesting data: \(error.localizedDescription)")
                 completion(nil)
@@ -44,16 +46,34 @@ class NetworkDataFetcher {
             DispatchQueue.main.async {
                 completion(decode)
             }
-        }.resume()
+            }.resume()
     }
     
-    func loadSingleItem<T: DownloadApiResource>(resource: inout T, id: String, completion: @escaping (T.ModelType?) -> Void) {
-        
+    func loadSingleItem<T: DownloadSingleItemApiResource>(resource: T, id: String?, completion: @escaping (T.ModelType?) -> Void) {
+        print ("RANDOM URL: \(resource.url)" )
+        _ = URLSession.shared.dataTask(with: resource.url) { (data, response, error) in
+            if let error = error {
+                print("Error received requesting data: \(error.localizedDescription)")
+                completion(nil)
+            }
+            guard let data = data else {return}
+            do {
+                let decode = try JSONDecoder().decode(T.ModelType.self, from: data)
+                DispatchQueue.main.async {
+                    completion(decode)
+                }
+            } catch let error {
+                print (error)
+            }
+
+            }.resume()
     }
     
     func decode<T: Decodable>(type: T.Type, decoder: JSONDecoder, from data: Data?) -> T? {
-        guard let data = data else {return nil}
-        
+        guard let data = data else {
+            print ("Argument data is nil")
+            return nil
+        }
         do {
             let objects = try decoder.decode(type.self, from: data)
             return objects
