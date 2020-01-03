@@ -14,7 +14,7 @@ class PhotoOfTheDayController: UIViewController {
     let photoTableView = UITableView()
     
     let numberOfCells = 2
-    let cellHeight: CGFloat = 50
+    let cellHeight: CGFloat = 100
     
     let photoCellIdentifier = "FullPhotoCell"
     let textCellIdentifier = "TextCell"
