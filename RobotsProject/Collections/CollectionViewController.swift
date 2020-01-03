@@ -37,7 +37,6 @@ class CollectionViewController: UIViewController {
     
     var currentPage = 1 {
         didSet {
-            print ("CurrentPage: \(currentPage)")
             fetchCollectionPhoto(pageNumber: currentPage)
         }
     }

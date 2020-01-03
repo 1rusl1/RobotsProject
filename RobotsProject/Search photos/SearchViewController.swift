@@ -33,17 +33,9 @@ class SearchViewController: UIViewController {
             if searchText.count > 0 {
                 if photoSearchResults.totalPages > currentPage {
                     fetchSearchResults(pageNumber: currentPage, searchTerm: searchText)
-                    print ("Fetch search results")
                 }
             } else {
                 fetchFeedImages(pageNumber: currentPage)
-                print ("Fetch feed images")
-                //            fetcher.loadItems(resource: &downloadPhotosResource, pageNumber: currentPage) { [weak self] (photo) in
-                //                guard let photo = photo else {return}
-                //                self?.photosArray.append(contentsOf: photo)
-                //                self?.loadingMore = false
-                //                self?.photoCollectionView.reloadData()
-                //            }
             }
         }
     }
@@ -99,7 +91,6 @@ class SearchViewController: UIViewController {
             self?.photosArray.append(contentsOf: photo)
             self?.loadingMore = false
             self?.photoCollectionView.reloadData()
-            print ("Fetch feed images")
         }
     }
     
@@ -107,7 +98,6 @@ class SearchViewController: UIViewController {
         fetcher.searchForItem(resource: &searchPhotoResource, searchTerm: searchTerm, pageNumber: pageNumber) { [weak self] (results) in
             guard let results = results else {return}
             self?.photoSearchResults = results
-            print ("RESULTS TOTAL PAGES: \(self?.photoSearchResults.totalPages)")
             self?.photosArray.append(contentsOf: results.results)
             self?.loadingMore = false
             self?.photoCollectionView.reloadData()
@@ -128,8 +118,6 @@ extension SearchViewController: UISearchBarDelegate {
         cache.removeAllObjects()
         photosArray.removeAll()
         fetchFeedImages(pageNumber: 1)
-        print ("SEARCH TEXT: \(searchText)")
-        //currentPage = 1
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -178,7 +166,6 @@ extension SearchViewController: UIScrollViewDelegate {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         if offsetY > contentHeight - scrollView.frame.height && contentHeight != 0 {
-            print ("load more")
             if loadingMore != true {
                 loadMore(currentPage)
                 loadingMore = true

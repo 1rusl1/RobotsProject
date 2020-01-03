@@ -19,7 +19,6 @@ class NetworkDataFetcher {
     func searchForItem<T: SearchApiResource>(resource: inout T, searchTerm: String, pageNumber: Int, completion: @escaping (T.ModelType?) -> Void ) {
         resource.searchTerm = searchTerm
         resource.pageNumber = pageNumber
-        print (resource.url)
         _ = URLSession.shared.dataTask(with: resource.url) { [weak self] (data, response, error) in
             if let error = error {
                 print ("Error received requesting data: \(error.localizedDescription)")
