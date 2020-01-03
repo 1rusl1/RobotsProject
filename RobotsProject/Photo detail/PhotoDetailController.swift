@@ -70,11 +70,9 @@ extension PhotoDetailController : UITableViewDelegate, UITableViewDataSource {
             
             if let image = cache.object(forKey: photo.id as AnyObject) {
                 cell.photoImageView.image = image
-                print ("image from cache")
             } else {
                 guard let urlString = photo.urls[PhotoURL.regular.rawValue] else { return cell }
                 UIImage.imageWithURL(urlString: urlString) { [weak self] (image) in
-                    print("Image request")
                     cell.photoImageView.image = image
                     self?.cache.setObject(image, forKey: self?.photo.id as AnyObject)
                 }

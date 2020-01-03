@@ -34,7 +34,6 @@ class PhotoOfTheDayController: UIViewController {
         super.viewDidLoad()
         fetchMainPhoto()
         setupVC()
-        print ("View did load")
     }
     
     //MARK: - Setup UI elements

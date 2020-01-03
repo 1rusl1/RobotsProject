@@ -35,7 +35,6 @@ class NetworkDataFetcher {
     
     func loadItems<T: DownloadItemsApiResource>(resource: inout T, pageNumber: Int, completion: @escaping ([T.ModelType]?) -> Void) {
         resource.pageNumber = pageNumber
-         print (resource.url)
         _ = URLSession.shared.dataTask(with: resource.url) { [weak self] (data, response, error) in
             if let error = error {
                 print("Error received requesting data: \(error.localizedDescription)")
@@ -50,7 +49,6 @@ class NetworkDataFetcher {
     }
     
     func loadSingleItem<T: DownloadSingleItemApiResource>(resource: T, id: String?, completion: @escaping (T.ModelType?) -> Void) {
-        print ("RANDOM URL: \(resource.url)" )
         _ = URLSession.shared.dataTask(with: resource.url) { (data, response, error) in
             if let error = error {
                 print("Error received requesting data: \(error.localizedDescription)")

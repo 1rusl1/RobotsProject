@@ -64,7 +64,6 @@ class CollectionsListViewController: UIViewController {
             }
             self?.loadingMore = false
             self?.collectionsTableView.reloadData()
-            print ("FETCH COLLECTIONS")
         }
     }
     
@@ -115,7 +114,6 @@ extension CollectionsListViewController: UIScrollViewDelegate {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         if offsetY > contentHeight - scrollView.frame.height {
-            print ("Load more")
             if loadingMore != true {
                 loadMore()
                 loadingMore = true

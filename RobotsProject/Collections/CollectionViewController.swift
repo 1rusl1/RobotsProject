@@ -79,7 +79,6 @@ class CollectionViewController: UIViewController {
     }
     //MARK: - Fetching data
     func fetchCollectionPhoto(pageNumber: Int) {
-        print ("FETCH COLLECTION PHOTO, page number: \(pageNumber)")
         fetcher.loadItems(resource: &resource, pageNumber: pageNumber) { [weak self] (photos) in
             guard let photos = photos else {return}
             if pageNumber == 1 {
