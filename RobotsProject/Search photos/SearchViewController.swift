@@ -48,7 +48,6 @@ class SearchViewController: UIViewController {
         cache.removeAllObjects()
         fetchFeedImages(pageNumber: 1)
         setupVC()
-        
     }
     
     // MARK: - Setup UI elements

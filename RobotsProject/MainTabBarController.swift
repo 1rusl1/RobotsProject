@@ -13,11 +13,6 @@ class MainTabBarController: UITabBarController {
    
     var mainPhoto : Photo?
     
-    override func loadView() {
-        super.loadView()
-        //fetchMainPhoto()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +23,6 @@ class MainTabBarController: UITabBarController {
         addChild(createNavController(vc: PhotoOfTheDayController(), title: "Photo of the day", image: UIImage(named: "photo")))
         addChild(createNavController(vc: SearchViewController(), title: "Search", image: UIImage(named: "search")))
         addChild(createNavController(vc: CollectionsListViewController(), title: "Collections", image: UIImage(named: "collection")))
-    
     }
     
     private func createNavController(vc: UIViewController, title: String, image: UIImage?) -> UINavigationController {

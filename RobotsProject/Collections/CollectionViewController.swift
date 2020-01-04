@@ -95,7 +95,6 @@ class CollectionViewController: UIViewController {
         currentPage += 1
         }
     }
-
 }
 //MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 extension CollectionViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -148,5 +147,4 @@ extension CollectionViewController: UIScrollViewDelegate {
             }
         }
     }
-
 }

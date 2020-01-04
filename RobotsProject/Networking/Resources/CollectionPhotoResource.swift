@@ -14,7 +14,7 @@ struct CollectionPhotoResource: DownloadItemsApiResource {
     
     var id = Int()
     
-    var methodPath : String {
+    var methodPath: String {
         return "/collections/\(id)/photos"
     }
     

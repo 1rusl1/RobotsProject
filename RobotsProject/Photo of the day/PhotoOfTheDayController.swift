@@ -93,7 +93,8 @@ extension PhotoOfTheDayController : UITableViewDelegate, UITableViewDataSource {
             cell.textLabel?.text = photo?.description ?? "Photo of the day"
             cell.textLabel?.numberOfLines = 0
             cell.textLabel?.textAlignment = .center
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 20)
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+            cell.textLabel?.textColor = .gray
             return cell
         }
         return UITableViewCell()

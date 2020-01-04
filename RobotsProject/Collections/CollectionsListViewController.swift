@@ -70,7 +70,6 @@ class CollectionsListViewController: UIViewController {
     func loadMore() {
         currentPage += 1
     }
-    
 }
 //MARK:- UITableViewDelegate, UITableViewDataSource
 extension CollectionsListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -120,5 +119,4 @@ extension CollectionsListViewController: UIScrollViewDelegate {
             }
         }
     }
-    
 }
